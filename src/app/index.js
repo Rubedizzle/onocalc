@@ -68,7 +68,7 @@ class Entry extends React.Component{
   render(){
     return (
       <div id="welcome">
-        <h2 id="heading-title">Airl Financial Savings Calculator</h2>
+        <h2>Airl Financial Savings Calculator</h2>
         <h4 className="bubbles">Notice details go here</h4>
         <Link to={'/calc'}><button className="pure-button pure-button-primary">Let us start</button></Link>
       </div>
