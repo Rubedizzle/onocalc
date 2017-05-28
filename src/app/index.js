@@ -51,10 +51,16 @@ class Calculator extends React.Component{
   render(){
     console.log('test');
     return (
-      <div id="calculator">
-        <h1>Calculator</h1>
-        <MainForm success={this.onSuccess} />
-        <Link to={'/success'}><button className="pure-button pure-button-primary">CALCULATE</button></Link>
+      <div className="container">
+        <div className="innContainer centerText">
+            <div className="pure-g">
+            <div id="calculator">
+              <h1>Calculator</h1>
+              <MainForm success={this.onSuccess} />
+              <Link to={'/success'}><button className="pure-button pure-button-primary">CALCULATE</button></Link>
+            </div>
+          </div>
+        </div>
       </div>
     );
 
@@ -67,11 +73,18 @@ class Entry extends React.Component{
 
   render(){
     return (
-      <div id="welcome">
-        <h2>Airl Financial Savings Calculator</h2>
-        <h4 className="bubbles">Notice details go here</h4>
-        <Link to={'/calc'}><button className="pure-button pure-button-primary">Let us start</button></Link>
+<div className="container">
+  <div className="innContainer centerText">
+    <div className="pure-g">
+      <div className="pure-u-1">
+            <div className="logo"><img src="../images/logo.jpg" /></div>
+            <h2>Airl Financial Savings Calculator</h2>
+            <p>Let us help you create an instant summary of the estimated savings between paying off your consumer debts under the existing amortization schedule in comparison to accelerating the repayment of your debts using our program.</p>
+            <Link to={'/calc'}><button className="pure-button pure-button-primary">Let us start</button></Link>
       </div>
+    </div>
+  </div>
+</div>
     );
 
   }
@@ -82,9 +95,15 @@ class Success extends React.Component{
   render(){
     console.log('success');
     return (
+      <div className="container">
+        <div className="innContainer centerText">
+            <div className="pure-g">
       <div id="success-page">
         <h1>This is how Airl Financial can help!</h1>
         <Summary />
+      </div>
+      </div>
+      </div>
       </div>
     );
 
