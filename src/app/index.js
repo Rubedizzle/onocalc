@@ -93,26 +93,26 @@ class Entry extends React.Component{
 }
 
 class Success extends React.Component{
-
   render(){
     console.log('success');
     return (
       <div className="container">
         <div className="innContainer centerText">
             <div className="pure-g">
-      <div id="success-page">
-        <h1>This is how Airl Financial can help!</h1>
-        <Summary />
-        <ScheduleFollowUp />
+              <div id="success-page">
+                <h1>This is how Airl Financial can help!</h1>
+                <Summary />
+                <ScheduleFollowUp />
+              </div>
+            </div>
+        </div>
       </div>
     );
-
   }
-
 }
 
 class ScheduleFollowUp extends React.Component{
-  constructor () {
+  constructor(){
       super();
       this.state = {
         fireRedirect: false,
@@ -147,9 +147,6 @@ class ScheduleFollowUp extends React.Component{
         {fireRedirect && (
           <Redirect to={from || '/confirmation'}/>
         )}
-      </div>
-      </div>
-      </div>
       </div>
     );
 
