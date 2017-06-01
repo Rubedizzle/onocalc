@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-import {BrowserRouter as Router, Route, Switch, Link, withRouter} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Link, withRouter, Redirect} from 'react-router-dom';
 
 import stores from './stores';
 
@@ -35,6 +35,7 @@ class App extends React.Component{
                 <Switch>
                   <Route exact={true} path={'/calc'} component={Calculator} />
                   <Route path={'/success'} component={Success} />
+                  <Route path={'/confirmation'} component={Confirmation} />
                   <Route path={'/'} component={Entry} />
                 </Switch>
         </Router>
@@ -92,6 +93,7 @@ class Entry extends React.Component{
 }
 
 class Success extends React.Component{
+
   render(){
     console.log('success');
     return (
@@ -101,6 +103,50 @@ class Success extends React.Component{
       <div id="success-page">
         <h1>This is how Airl Financial can help!</h1>
         <Summary />
+        <ScheduleFollowUp />
+      </div>
+    );
+
+  }
+
+}
+
+class ScheduleFollowUp extends React.Component{
+  constructor () {
+      super();
+      this.state = {
+        fireRedirect: false,
+        checkboxState: true
+      }
+    }
+
+  handleSubmit(e){
+    e.preventDefault();
+    this.setState({ fireRedirect: true })
+  }
+
+  toggle(event) {
+  this.setState({
+    checkboxState: !this.state.checkboxState
+  });
+  console.log (!this.state.checkboxState + ' switched to ' + this.state.checkboxState);
+}
+
+  render(){
+    const checkedOrNot = [];
+    const { from } = '/'
+    const { fireRedirect } = this.state
+
+    return (
+      <div id="followUp">
+        <form id="submitToAirl" className="pure-form" onSubmit={this.handleSubmit.bind(this)}>
+          <input type="checkbox" name="agreedToFollowUp" ref="agreedToFollowUp" onClick={this.toggle.bind(this)} />
+          <label>I would like an Airl Financial representative to follow-up with me.</label>
+          <button disabled={this.state.checkboxState} type="submit" value="Submit to Airl">Submit to Airl</button>
+        </form>
+        {fireRedirect && (
+          <Redirect to={from || '/confirmation'}/>
+        )}
       </div>
       </div>
       </div>
@@ -113,6 +159,7 @@ class Success extends React.Component{
 
 var MainForm = require('./mainForm');
 var Summary = require('./Summary');
+var Confirmation = require('./Confirmation');
 
 //put component into html page
 ReactDOM.render(<App />,document.getElementById('calc-wrapper'));
