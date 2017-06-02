@@ -56,9 +56,8 @@ class Calculator extends React.Component{
         <div className="innContainer centerText">
             <div className="pure-g">
             <div id="calculator">
-              <h1>Calculator</h1>
               <MainForm success={this.onSuccess} />
-              <Link to={'/success'}><button className="pure-button pure-button-primary">CALCULATE</button></Link>
+              <Link to={'/success'}><button className="btn">CALCULATE</button></Link>
             </div>
           </div>
         </div>
@@ -81,7 +80,7 @@ class Entry extends React.Component{
             <div className="logo"><img src="../images/logo.jpg" /></div>
             <h2>Airl Financial Savings Calculator</h2>
             <p>Let us help you create an instant summary of the estimated savings between paying off your consumer debts under the existing amortization schedule in comparison to accelerating the repayment of your debts using our program.</p>
-            <Link to={'/calc'}><button className="pure-button pure-button-primary">Let us start</button></Link>
+            <Link to={'/calc'}><button className="btn"><i className="fa fa-calculator" aria-hidden="true"></i> Get Started!</button></Link>
       </div>
     </div>
   </div>
