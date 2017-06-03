@@ -51,7 +51,7 @@ class Summary extends React.Component{
     console.log(debtStore.list);
     return (
       <div className="results">
-        <h1>Airl Financial will save you ${this.calculateSavings()} / month</h1>
+        <h1>Airl Financial will save you <span className="save">${this.calculateSavings()}</span> / month</h1>
         <h3>Current Mortgage Payment: ${userStore.mortgagePayment()} / month</h3>
         <div id="debtSummary">
           <h3>Current Total Debt Payment: ${debtStore.debtMonthlyPayment()} / month</h3>

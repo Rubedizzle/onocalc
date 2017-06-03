@@ -62,7 +62,7 @@ class DebtList extends React.Component{
     return (
       <div className="debtlist">
         <AddDebt />
-        <h2> Debts </h2>
+        <h2>Debts</h2>
         <div className = "pure-g">
           {debts.length == 0 &&
               <div className="pure-u-1-3">

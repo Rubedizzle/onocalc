@@ -99,6 +99,7 @@ class Success extends React.Component{
         <div className="innContainer centerText">
             <div className="pure-g">
               <div id="success-page">
+              <div className="logo"><img src="../images/logo.jpg" /></div>
                 <h1>This is how Airl Financial can help!</h1>
                 <Summary />
                 <ScheduleFollowUp />
@@ -140,8 +141,8 @@ class ScheduleFollowUp extends React.Component{
       <div id="followUp">
         <form id="submitToAirl" className="pure-form" onSubmit={this.handleSubmit.bind(this)}>
           <input type="checkbox" name="agreedToFollowUp" ref="agreedToFollowUp" onClick={this.toggle.bind(this)} />
-          <label>I would like an Airl Financial representative to follow-up with me.</label>
-          <button disabled={this.state.checkboxState} type="submit" value="Submit to Airl">Submit to Airl</button>
+          <label>&nbsp;I would like an Airl Financial representative to follow-up with me.</label><br /><br />
+          <button disabled={this.state.checkboxState} type="submit" value="Submit to Airl" className="btn">Submit to Airl</button>
         </form>
         {fireRedirect && (
           <Redirect to={from || '/confirmation'}/>

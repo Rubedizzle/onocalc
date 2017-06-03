@@ -32,7 +32,7 @@ class MainForm extends React.Component{
             </div>
           </fieldset>
           <fieldset>
-            <div className="pure-control-group">
+            <div id="cmi" className="pure-control-group pure-u-1-2 fl">
               <h2>Current Mortgage Information</h2>
               <input type="text" name="home_value" label="Market Value of Home" ref="homeValue" placeholder="Fair Market Value of Home" onChange={this.updateHomeDetails}/><br />
               <input type="text" name="mortgage" label="Total Mortgage" ref="totalMortgage" placeholder="Total Mortgage Amount" onChange={this.updateHomeDetails}/><br />

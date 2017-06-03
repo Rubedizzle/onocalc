@@ -12,10 +12,10 @@ class AddDebt extends React.Component{
 
   render(){
     return(
-      <div className="addADebt">
+      <div className="addADebt pure-u-1-2 fr">
       <form id="newDebtForm" className="pure-form" onSubmit={this.handleSubmit.bind(this)}>
         <fieldset className="pure-group">
-          <h3>Add a Debt</h3>
+          <h2>Add a Debt</h2>
           <select name="debtTypes" className="pure-input-1-2" ref="newDebt" onChange={this.handleChange.bind(this)}>
             <option value="Credit Card">Credit Card</option>
             <option value="Car Loan">Car Loan</option>
