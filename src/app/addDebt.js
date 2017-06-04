@@ -12,7 +12,7 @@ class AddDebt extends React.Component{
 
   render(){
     return(
-      <div className="addADebt pure-u-1-2 fr">
+      <div className="addADebt pure-u-1-2">
       <form id="newDebtForm" className="pure-form" onSubmit={this.handleSubmit.bind(this)}>
         <fieldset className="pure-group">
           <h2>Add a Debt</h2>
