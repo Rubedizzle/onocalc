@@ -1,5 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
+import AddDebt from './AddDebt';
 
 var DebtList = require('./debtList');
 var Summary = require('./summary');
@@ -14,14 +15,14 @@ class MainForm extends React.Component{
       <div className="mainForm">
         <form id="cx-details" className="pure-form pure-form-aligned" onSubmit={this.handleSubmit}>
           <fieldset>
+          <div className="logo"><img src="../images/logo.jpg" /></div>
+            <div id="personalInfo">
             <div className="pure-control-group">
               <h2>Contact Information</h2>
               <input type="text" name="first_name" label="First Name" ref="firstName" placeholder="First Name"/>
               <input type="text" name="last_name" label="Last Name" ref="lastName" placeholder="Last Name"/>
-            </div>
-            <div className="pure-control-group">
-              <input type="email" name="email" label="Email Address" ref="emailAddress" placeholder="john@smith.com"/>
-              <input type="text" name="phone" label="Phone Number" ref="phoneNumber" placeholder="1-800-888-9999"/>
+              <input type="email" name="email" label="Email Address" ref="emailAddress" placeholder="Email"/>
+              <input type="text" name="phone" label="Phone Number" ref="phoneNumber" placeholder="Phone Number"/>
             </div>
             <div className="pure-control-group">
               <input type="text" name="address" label="Street Address" ref="streetAddress" placeholder="Street Address"/>
@@ -29,17 +30,19 @@ class MainForm extends React.Component{
               <input type="text" name="province" label="Province" ref="province" placeholder="Province"/>
               <input type="text" name="postal_code" label="Postal Code" ref="postalCode" placeholder="Postal Code"/>
             </div>
+            </div>
           </fieldset>
           <fieldset>
-            <div className="pure-control-group">
+            <div id="cmi" className="pure-control-group pure-u-1-2 fl">
               <h2>Current Mortgage Information</h2>
-              <input type="text" name="home_value" label="Market Value of Home" ref="homeValue" placeholder="Fair Market Value of Home" onChange={this.updateHomeDetails}/>
-              <input type="text" name="mortgage" label="Total Mortgage" ref="totalMortgage" placeholder="Total Mortgage Amount" onChange={this.updateHomeDetails}/>
-              <input type="text" name="interest_rate" label="Mortgage Interest Rate" ref="interestRate" placeholder="Mortgage Interest Rate (%)" onChange={this.updateHomeDetails}/>
-              <input type="text" name="term_years" label="Mortgage Term" ref="termYears" placeholder="Mortgage Term (years)" onChange={this.updateHomeDetails}/>
+              <input type="text" name="home_value" label="Market Value of Home" ref="homeValue" placeholder="Fair Market Value of Home" onChange={this.updateHomeDetails}/><br />
+              <input type="text" name="mortgage" label="Total Mortgage" ref="totalMortgage" placeholder="Total Mortgage Amount" onChange={this.updateHomeDetails}/><br />
+              <input type="text" name="interest_rate" label="Mortgage Interest Rate" ref="interestRate" placeholder="Mortgage Interest Rate (%)" onChange={this.updateHomeDetails}/><br />
+              <input type="text" name="term_years" label="Mortgage Term" ref="termYears" placeholder="Mortgage Term (years)" onChange={this.updateHomeDetails}/><br />
               <input type="text" name="amortization" label="Amortization Period" ref="amortizationPeriod" placeholder="Amortization Period (years)" onChange={this.updateHomeDetails}/>
             </div>
           </fieldset>
+          <AddDebt />
           <DebtList updateDebts={this.updateDebts}/>
           <br/>
           <br/>

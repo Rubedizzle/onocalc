@@ -52,10 +52,15 @@ class Calculator extends React.Component{
   render(){
     console.log('test');
     return (
-      <div id="calculator">
-        <h1>Calculator</h1>
-        <MainForm success={this.onSuccess} />
-        <Link to={'/success'}><button className="pure-button pure-button-primary">CALCULATE</button></Link>
+      <div className="container">
+        <div className="innContainer centerText">
+            <div className="pure-g">
+            <div id="calculator">
+              <MainForm success={this.onSuccess} />
+              <Link to={'/success'}><button className="btn">CALCULATE</button></Link>
+            </div>
+          </div>
+        </div>
       </div>
     );
 
@@ -68,11 +73,18 @@ class Entry extends React.Component{
 
   render(){
     return (
-      <div id="welcome">
-        <h2 id="heading-title">Airl Financial Savings Calculator</h2>
-        <h4 className="bubbles">Notice details go here</h4>
-        <Link to={'/calc'}><button className="pure-button pure-button-primary">Let us start</button></Link>
+<div className="container">
+  <div className="innContainer centerText">
+    <div className="pure-g">
+      <div className="pure-u-1">
+            <div className="logo"><img src="../images/logo.jpg" /></div>
+            <h2>Airl Financial Savings Calculator</h2>
+            <p>Let us help you create an instant summary of the estimated savings between paying off your consumer debts under the existing amortization schedule in comparison to accelerating the repayment of your debts using our program.</p>
+            <Link to={'/calc'}><button className="btn"><i className="fa fa-calculator" aria-hidden="true"></i> Get Started!</button></Link>
       </div>
+    </div>
+  </div>
+</div>
     );
 
   }
@@ -84,19 +96,24 @@ class Success extends React.Component{
   render(){
     console.log('success');
     return (
-      <div id="success-page">
-        <h1>This is how Airl Financial can help!</h1>
-        <Summary />
-        <ScheduleFollowUp />
+      <div className="container">
+        <div className="innContainer centerText">
+            <div className="pure-g">
+              <div id="success-page">
+              <div className="logo"><img src="../images/logo.jpg" /></div>
+                <h1>This is how Airl Financial can help!</h1>
+                <Summary />
+                <ScheduleFollowUp />
+              </div>
+            </div>
+        </div>
       </div>
     );
-
   }
-
 }
 
 class ScheduleFollowUp extends React.Component{
-  constructor () {
+  constructor(){
       super();
       this.state = {
         fireRedirect: false,
@@ -125,8 +142,8 @@ class ScheduleFollowUp extends React.Component{
       <div id="followUp">
         <form id="submitToAirl" className="pure-form" onSubmit={this.handleSubmit.bind(this)}>
           <input type="checkbox" name="agreedToFollowUp" ref="agreedToFollowUp" onClick={this.toggle.bind(this)} />
-          <label>I would like an Airl Financial representative to follow-up with me.</label>
-          <button disabled={this.state.checkboxState} type="submit" value="Submit to Airl">Submit to Airl</button>
+          <label>&nbsp;I would like an Airl Financial representative to follow-up with me.</label><br /><br />
+          <button disabled={this.state.checkboxState} type="submit" value="Submit to Airl" className="btn">Submit to Airl</button>
         </form>
         {fireRedirect && (
           <Redirect to={from || '/confirmation'}/>
