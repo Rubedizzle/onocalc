@@ -1,6 +1,5 @@
 import React from 'react';
 import DebtItem from './debtItem';
-import AddDebt from './AddDebt';
 
 import debtStore from './stores/DebtStore'
 import {observer} from 'mobx-react';
@@ -61,7 +60,6 @@ class DebtList extends React.Component{
       }.bind(this))
     return (
       <div className="debtlist">
-        <AddDebt />
         <h2>Debts</h2>
         <div className = "pure-g">
           {debts.length == 0 &&

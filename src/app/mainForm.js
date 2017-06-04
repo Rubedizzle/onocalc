@@ -1,5 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
+import AddDebt from './AddDebt';
 
 var DebtList = require('./debtList');
 var Summary = require('./summary');
@@ -41,6 +42,7 @@ class MainForm extends React.Component{
               <input type="text" name="amortization" label="Amortization Period" ref="amortizationPeriod" placeholder="Amortization Period (years)" onChange={this.updateHomeDetails}/>
             </div>
           </fieldset>
+          <AddDebt />
           <DebtList updateDebts={this.updateDebts}/>
           <br/>
           <br/>
