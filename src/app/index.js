@@ -92,6 +92,7 @@ class Entry extends React.Component{
 }
 
 class Success extends React.Component{
+
   render(){
     console.log('success');
     return (
