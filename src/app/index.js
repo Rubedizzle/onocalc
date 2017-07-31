@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+import { autorun, observable, action } from 'mobx';
+
 import {BrowserRouter as Router, Route, Switch, Link, withRouter, Redirect} from 'react-router-dom';
 
 import stores from './stores';
@@ -121,9 +123,13 @@ class ScheduleFollowUp extends React.Component{
       }
     }
 
-  handleSubmit(e){
+  async handleSubmit(e){
     e.preventDefault();
-    this.setState({ fireRedirect: true })
+    var success = await this.add('add');
+    console.log(success);
+      if (success == true){
+        this.setState({ fireRedirect: true });
+      }
   }
 
   toggle(event) {
@@ -132,6 +138,54 @@ class ScheduleFollowUp extends React.Component{
   });
   console.log (!this.state.checkboxState + ' switched to ' + this.state.checkboxState);
 }
+
+  @action async add(data) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json; charset=UTF-8');
+
+    const options = {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        first_name: userStore.getField('first_name'),
+        last_name: userStore.getField('last_name'),
+        phone: userStore.getField('phone'),
+        email: userStore.getField('email'),
+        address: userStore.getField('address'),
+        city: userStore.getField('city'),
+        province: userStore.getField('province'),
+        postal_code: userStore.getField('postal_code'),
+        homeValue: userStore.homeValue,
+        totalMortgage: userStore.totalMortgage,
+        interestRate: userStore.interestRate,
+        termYears: userStore.termYears,
+        amortizationPeriod: userStore.amortizationPeriod,
+        current_mortgage_payment: userStore.mortgagePayment(),
+        current_debt_payment: debtStore.debtMonthlyPayment(),
+        airl_new_payment: +999999
+      })
+    };
+
+    var status;
+    console.log('The data: ' + options.body);
+    const request = new Request('http://www.impaulse.com/airlcalc/api/add', options);
+    const response = await fetch(request).then(function(res){
+      status = res.status;
+      console.log('Response Status:' + status);
+      return res.json()
+    });
+    console.log('the response: ' + JSON.stringify(response));
+    data = response['ID'];
+    console.log("status: " + status);
+    //console.log("response value: " + response.text());
+    if (status == 201 || status == 200){
+      userStore.setConfID(data);
+      return true;
+    } else {
+      console.log('not 200 - fail');
+      return false;
+    };
+  }
 
   render(){
     const checkedOrNot = [];

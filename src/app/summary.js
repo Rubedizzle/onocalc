@@ -14,9 +14,9 @@ class Summary extends React.Component{
     //var N = this.props.summary.amortizationPeriod * 12;
     return +(Math.round(userStore.mortgagePayment() + "e+2")  + "e-2");
 
-    var P = 230000;
-    var I = 3 / 100 / 12;
-    var N = 25 * 12;
+    var P = userStore.totalMortgage;
+    var I = userStore.interestRate / 100 / 12;
+    var N = userStore.amortizationPeriod * 12;
     console.log('calculating');
     console.log('total mortgage: ' + P);
     console.log('interest rate over 12: ' + I);
@@ -30,10 +30,10 @@ class Summary extends React.Component{
   }
 
   calculateAirlPayment(){
-    var P = 230000 + 20000 + debtStore.total();
-    var I = 2.5 / 100 / 12;
-    var N = 30 * 12;
-    console.log(P);
+    var P = +userStore.totalMortgage + +userStore.airlFee + debtStore.total();
+    var I = userStore.airlRate / 100 / 12;
+    var N = userStore.airlAmortizationPeriod * 12;
+    console.log('P: ' + P);
     console.log(I);
     console.log(N);
     var payment = Math.round((P * I * (Math.pow(1 + I, N)) / (Math.pow(1 + I, N) - 1)) * 100) / 100;

@@ -19,16 +19,16 @@ class MainForm extends React.Component{
             <div id="personalInfo">
             <div className="pure-control-group">
               <h2>Contact Information</h2>
-              <input type="text" name="first_name" label="First Name" ref="firstName" placeholder="First Name"/>
-              <input type="text" name="last_name" label="Last Name" ref="lastName" placeholder="Last Name"/>
-              <input type="email" name="email" label="Email Address" ref="emailAddress" placeholder="Email"/>
-              <input type="text" name="phone" label="Phone Number" ref="phoneNumber" placeholder="Phone Number"/>
+              <input type="text" name="first_name" label="First Name" ref="firstName" placeholder="First Name" onChange={this.setUserDetails}/>
+              <input type="text" name="last_name" label="Last Name" ref="lastName" placeholder="Last Name" onChange={this.setUserDetails}/>
+              <input type="email" name="email" label="Email Address" ref="emailAddress" placeholder="Email" onChange={this.setUserDetails}/>
+              <input type="text" name="phone" label="Phone Number" ref="phoneNumber" placeholder="Phone Number" onChange={this.setUserDetails}/>
             </div>
             <div className="pure-control-group">
-              <input type="text" name="address" label="Street Address" ref="streetAddress" placeholder="Street Address"/>
-              <input type="text" name="city" label="City" ref="cityName" placeholder="City"/>
-              <input type="text" name="province" label="Province" ref="province" placeholder="Province"/>
-              <input type="text" name="postal_code" label="Postal Code" ref="postalCode" placeholder="Postal Code"/>
+              <input type="text" name="address" label="Street Address" ref="streetAddress" placeholder="Street Address" onChange={this.setUserDetails}/>
+              <input type="text" name="city" label="City" ref="cityName" placeholder="City" onChange={this.setUserDetails}/>
+              <input type="text" name="province" label="Province" ref="province" placeholder="Province" onChange={this.setUserDetails}/>
+              <input type="text" name="postal_code" label="Postal Code" ref="postalCode" placeholder="Postal Code" onChange={this.setUserDetails}/>
             </div>
             </div>
           </fieldset>
@@ -53,22 +53,41 @@ class MainForm extends React.Component{
 
   updateHomeDetails(e){
     var field = '';
+    // if (e.target.name == 'home_value') {
+    //   field = 'homeValue';
+    // }
+    // else if (e.target.name == "mortgage"){
+    //   field = 'totalMortgage';
+    // }
+    // else if (e.target.name == "interest_rate") {
+    //   field = 'interestRate';
+    // }
+    // else if (e.target.name == "term_years") {
+    //   field = 'termYears';
+    // }
+    // else if (e.target.name == "amortization") {
+    //   field = 'amortizationPeriod';
+    // }
+    // userStore.setField(field,e.target.value);
     if (e.target.name == 'home_value') {
-      field = 'homeValue';
+      userStore.homeValue = e.target.value;
     }
     else if (e.target.name == "mortgage"){
-      field = 'totalMortgage';
+      userStore.totalMortgage = e.target.value;
     }
     else if (e.target.name == "interest_rate") {
-      field = 'interestRate';
+      userStore.interestRate = e.target.value;
     }
     else if (e.target.name == "term_years") {
-      field = 'termYears';
+      userStore.termYears = e.target.value;
     }
     else if (e.target.name == "amortization") {
-      field = 'amortizationPeriod';
+      userStore.amortizationPeriod = e.target.value;
     }
-    userStore.setField(field,e.target.value);
+  }
+
+  setUserDetails(e){
+    userStore.setField(e.target.name,e.target.value);
   }
 
   handleSubmit(e){

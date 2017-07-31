@@ -16,8 +16,8 @@ class Confirmation extends React.Component{
             <div className="pure-u-1">
                   <div className="logo"><img src="../images/logo.jpg" /></div>
       <div className="confirmation">
-        <h3>Your Confirmation Number:</h3> <span id="confirmationNum" className="ticket">AF1902902340435</span>
-        <h2>Thanks <strong>_____</strong>! We have sent a confirmation email to info@airlfinancial.com</h2>
+        <h3>Your Confirmation Number:</h3> <span id="confirmationNum" className="ticket">{ userStore.getConfID() }</span>
+        <h2>Thanks <strong>{userStore.getField('first_name')}</strong>! We have sent a confirmation email to {userStore.getField('email')}</h2>
         <h3>One of our representatives will be in contact with you shortly.</h3>
       </div>
       </div>
