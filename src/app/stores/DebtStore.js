@@ -40,7 +40,9 @@ class DebtStore {
     return (
       <div id="listofDebts">
         {debts}
+        <div className="clear"></div>
       </div>
+      
   );
   }
 

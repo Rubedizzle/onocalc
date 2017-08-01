@@ -12,7 +12,7 @@ class AddDebt extends React.Component{
 
   render(){
     return(
-      <div className="addADebt pure-u-1-2 fr">
+      <div className="addADebt pure-u-1-2">
       <form id="newDebtForm" className="pure-form" onSubmit={this.handleSubmit.bind(this)}>
         <fieldset className="pure-group">
           <h2>Add a Debt</h2>
@@ -21,14 +21,11 @@ class AddDebt extends React.Component{
             <option value="Car Loan">Car Loan</option>
             <option value="Line of Credit">Line of Credit</option>
             <option value="Student Loan">Student Loan</option>
-          </select>
-          <p>Total Debt Amount</p>
-          <input type="text" name="total_debt" label="Total Debt Amount" ref="totalDebt"/>
-          <p>Interest Rate</p>
-          <input type="text" name="debt_interest_rate" label="Interest Rate" ref="interestRate"/>
-          <p>Monthly Payment</p>
-          <input type="text" name="monthly_payment" label="Monthly Payment" ref="monthlyPayment"/>
-          <input type="submit" value="Add Debt"/>
+          </select><br /><br />
+          <input type="text" placeholder="Total Debt Amount" name="total_debt" label="Total Debt Amount" ref="totalDebt"/><br />
+          <input type="text" placeholder="Interest Rate" name="debt_interest_rate" label="Interest Rate" ref="interestRate"/><br />
+          <input type="text" placeholder="Monthly Payment" name="monthly_payment" label="Monthly Payment" ref="monthlyPayment"/><br />
+          <input type="submit" className="btn" value="Add Debt"/>
         </fieldset>
       </form>
       </div>

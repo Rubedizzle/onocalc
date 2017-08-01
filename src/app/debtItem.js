@@ -26,7 +26,7 @@ class DebtItem extends React.Component{
     }
 
     return (
-        <div className="debt-item pure-u-1-3">
+        <div className="debt-item pure-u-1-4">
           <i className={'fa ' + debtIcon + ' debtIcon'} aria-hidden="true"></i>
           <span className="debt-type">{this.props.debt.debtType}</span>
           <p>Total Debt: ${this.props.debt.totalDebt}</p>
