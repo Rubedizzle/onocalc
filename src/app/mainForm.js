@@ -30,6 +30,9 @@ class MainForm extends React.Component{
               <input type="text" name="province" label="Province" ref="province" placeholder="Province" onChange={this.setUserDetails}/>
               <input type="text" name="postal_code" label="Postal Code" ref="postalCode" placeholder="Postal Code" onChange={this.setUserDetails}/>
             </div>
+            <div className="pure-control-group">
+              <input type="text" name="income" label="Household Income" ref="householdIncome" placeholder="Household Income" onChange={this.setUserDetails}/>
+            </div>
             </div>
           </fieldset>
           <div id="cmi" className="pure-control-group pure-u-1-2">
@@ -101,6 +104,7 @@ class MainForm extends React.Component{
       cityName:this.refs.cityName.value,
       province:this.refs.province.value,
       postalCode:this.refs.postalCode.value,
+      householdIncome:this.refs.householdIncome.value,
       homeValue:this.refs.homeValue.value,
       totalMortgage:this.refs.totalMortgage.value,
       interestRate:this.refs.interestRate.value,

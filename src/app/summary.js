@@ -29,6 +29,10 @@ class Summary extends React.Component{
     return +(Math.round(debtStore.debtMonthlyPayment() + "e+2")  + "e-2");
   }
 
+  calculateCurrentMonthlyObligation(){
+    return userStore.mortgagePayment() + debtStore.debtMonthlyPayment();
+  }
+
   calculateAirlPayment(){
     var P = +userStore.totalMortgage + +userStore.airlFee + debtStore.total();
     var I = userStore.airlRate / 100 / 12;
@@ -47,19 +51,26 @@ class Summary extends React.Component{
                       - this.calculateAirlPayment() + "e+2")  + "e-2");
   }
 
+  calculate50CashFlowSavings(){
+    return this.calculateSavings() * 0.5;
+  }
+
+  calculateMonthsToPayOffAccelerated(){
+    var P = +userStore.totalMortgage + +userStore.airlFee + debtStore.total();
+    var I = userStore.airlRate / 100 / 12;
+    return -(Math.log( 1 - (I * P) / (this.calculateAirlPayment() + (this.calculateSavings() * 0.5)) )) / +(Math.log( 1 + I ));
+  }
+
   render(){
     console.log(debtStore.list);
     return (
       <div className="results">
-        <h1>Airl Financial will save you <span className="save">${this.calculateSavings()}</span> / month</h1>
-        <h3>Current Mortgage Payment: ${userStore.mortgagePayment()} / month</h3>
-        <div id="debtSummary">
-          <h3>Current Total Debt Payment: ${debtStore.debtMonthlyPayment()} / month</h3>
-          <div id="debtList">
-            {debtStore.list()}
-          </div>
-        </div>
+        <h1>Airl Financial can save up to <span className="save">${this.calculateSavings()}</span> / month</h1>
+        <h3>Your current monthly obligations are ${this.calculateCurrentMonthlyObligation()}</h3>
         <h2>New Consolidated Monthly Payment: ${this.calculateAirlPayment()} / month</h2>
+        <h2>Add 50% of the cash flow savings to your monthly payments, and you could be debt free in {Math.round(this.calculateMonthsToPayOffAccelerated())} monthes!</h2>
+        <h2>Total Mortgage: {userStore.totalMortgage}</h2>
+        <h2>Total Debts: {debtStore.total()}</h2>
       </div>
     );
   }
