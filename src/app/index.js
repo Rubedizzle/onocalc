@@ -33,14 +33,14 @@ class App extends React.Component{
   render(){
     return (
       <Provider UserStore={stores.userStore} DebtStore={stores.debtStore}>
-        <Router>
-                <Switch>
-                  <Route exact={true} path={'/calc'} component={Calculator} />
-                  <Route path={'/success'} component={Success} />
-                  <Route path={'/confirmation'} component={Confirmation} />
-                  <Route path={'/'} component={Entry} />
-                </Switch>
-        </Router>
+          <Router>
+                  <Switch>
+                    <Route exact={true} path={'/calc'} component={Calculator} />
+                    <Route path={'/success'} component={Success} />
+                    <Route path={'/confirmation'} component={Confirmation} />
+                    <Route path={'/'} component={Entry} />
+                  </Switch>
+          </Router>
       </Provider>
     );
   }
@@ -73,6 +73,13 @@ class Calculator extends React.Component{
 
 class Entry extends React.Component{
 
+  constructor(){
+      super();
+      this.state = {
+        initialized: userStore.initialized
+      }
+    }
+
   render(){
     return (
 <div className="container">
@@ -82,7 +89,10 @@ class Entry extends React.Component{
             <div className="logo"><img src="../images/logo.jpg" /></div>
             <h2>Airl Financial Savings Calculator</h2>
             <p>Let us help you create an instant summary of the estimated savings between paying off your consumer debts under the existing amortization schedule in comparison to accelerating the repayment of your debts using our program.</p>
-            <Link to={'/calc'}><button className="btn"><i className="fa fa-calculator" aria-hidden="true"></i> Get Started!</button></Link>
+            <p></p>
+            {this.state.initialized &&
+              <Link to={'/calc'}><button className="btn"><i className="fa fa-calculator" aria-hidden="true"></i> Get Started!</button></Link>
+            }
       </div>
     </div>
   </div>
@@ -141,8 +151,8 @@ class ScheduleFollowUp extends React.Component{
 
   @action async add(data) {
     const headers = new Headers();
-    headers.append('Content-Type', 'application/json; charset=UTF-8');
-
+    headers.append('Content-Type', 'application/text; charset=UTF-8');
+    console.log('airl payment sending ' + userStore.airlPayment)
     const options = {
       method: 'POST',
       headers,
@@ -155,6 +165,7 @@ class ScheduleFollowUp extends React.Component{
         city: userStore.getField('city'),
         province: userStore.getField('province'),
         postal_code: userStore.getField('postal_code'),
+        householdIncome: userStore.getField('income'),
         homeValue: userStore.homeValue,
         totalMortgage: userStore.totalMortgage,
         interestRate: userStore.interestRate,
@@ -162,7 +173,8 @@ class ScheduleFollowUp extends React.Component{
         amortizationPeriod: userStore.amortizationPeriod,
         current_mortgage_payment: userStore.mortgagePayment(),
         current_debt_payment: debtStore.debtMonthlyPayment(),
-        airl_new_payment: +999999
+        airl_new_payment: userStore.getField('airlPayment'),
+        debtList: JSON.stringify(debtStore.getDebts())
       })
     };
 

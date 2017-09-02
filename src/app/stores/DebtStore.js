@@ -42,8 +42,13 @@ class DebtStore {
         {debts}
         <div className="clear"></div>
       </div>
-      
+
   );
+  }
+
+  @observable getDebts(){
+    var debts = debtStore.all;
+    return debts;
   }
 
   @observable total(){

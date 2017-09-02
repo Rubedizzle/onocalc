@@ -22,9 +22,9 @@ class AddDebt extends React.Component{
             <option value="Line of Credit">Line of Credit</option>
             <option value="Student Loan">Student Loan</option>
           </select><br /><br />
-          <input type="text" placeholder="Total Debt Amount" name="total_debt" label="Total Debt Amount" ref="totalDebt"/><br />
-          <input type="text" placeholder="Interest Rate" name="debt_interest_rate" label="Interest Rate" ref="interestRate"/><br />
-          <input type="text" placeholder="Monthly Payment" name="monthly_payment" label="Monthly Payment" ref="monthlyPayment"/><br />
+          <input type="number" placeholder="Total Debt Amount" name="total_debt" label="Total Debt Amount" ref="totalDebt"/><br />
+          <input type="number" placeholder="Interest Rate" name="debt_interest_rate" label="Interest Rate" ref="interestRate"/><br />
+          <input type="number" placeholder="Monthly Payment" name="monthly_payment" label="Monthly Payment" ref="monthlyPayment"/><br />
           <input type="submit" className="btn" value="Add Debt"/>
         </fieldset>
       </form>

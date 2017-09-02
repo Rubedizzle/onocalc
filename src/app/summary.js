@@ -12,7 +12,7 @@ class Summary extends React.Component{
     //var P = this.props.summary.totalMortgage;
     //var I = this.props.summary.interestRate / 100 / 12;
     //var N = this.props.summary.amortizationPeriod * 12;
-    return +(Math.round(userStore.mortgagePayment() + "e+2")  + "e-2");
+    return +Math.round(userStore.mortgagePayment()).toFixed(2);
 
     var P = userStore.totalMortgage;
     var I = userStore.interestRate / 100 / 12;
@@ -26,11 +26,11 @@ class Summary extends React.Component{
   }
 
   calculateCurrentMonthlyDebtPayment(){
-    return +(Math.round(debtStore.debtMonthlyPayment() + "e+2")  + "e-2");
+    return +Math.round(debtStore.debtMonthlyPayment()).toFixed(2);
   }
 
   calculateCurrentMonthlyObligation(){
-    return userStore.mortgagePayment() + debtStore.debtMonthlyPayment();
+    return +(userStore.mortgagePayment() + debtStore.debtMonthlyPayment()).toFixed(2);
   }
 
   calculateAirlPayment(){
@@ -42,17 +42,18 @@ class Summary extends React.Component{
     console.log(N);
     var payment = Math.round((P * I * (Math.pow(1 + I, N)) / (Math.pow(1 + I, N) - 1)) * 100) / 100;
     console.log(payment);
-    return +(Math.round(payment + "e+2")  + "e-2");
+    userStore.setField('airlPayment',payment);
+    return +Math.round(payment).toFixed(2);
   }
 
   calculateSavings(){
-    return +(Math.round(this.calculateCurrentMonthlyMortgagePayment()
+    return +Math.round(this.calculateCurrentMonthlyMortgagePayment()
                       + this.calculateCurrentMonthlyDebtPayment()
-                      - this.calculateAirlPayment() + "e+2")  + "e-2");
+                      - this.calculateAirlPayment()).toFixed(2);
   }
 
   calculate50CashFlowSavings(){
-    return this.calculateSavings() * 0.5;
+    return +(this.calculateSavings() * 0.5).toFixed(2);
   }
 
   calculateMonthsToPayOffAccelerated(){
@@ -61,16 +62,25 @@ class Summary extends React.Component{
     return -(Math.log( 1 - (I * P) / (this.calculateAirlPayment() + (this.calculateSavings() * 0.5)) )) / +(Math.log( 1 + I ));
   }
 
+  calculateLTV(){
+    return +(((+userStore.totalMortgage + +debtStore.total() + +userStore.airlFee) / +userStore.homeValue)* 100).toFixed(2);
+  }
+
   render(){
     console.log(debtStore.list);
     return (
       <div className="results">
-        <h1>Airl Financial can save up to <span className="save">${this.calculateSavings()}</span> / month</h1>
-        <h3>Your current monthly obligations are ${this.calculateCurrentMonthlyObligation()}</h3>
-        <h2>New Consolidated Monthly Payment: ${this.calculateAirlPayment()} / month</h2>
-        <h2>Add 50% of the cash flow savings to your monthly payments, and you could be debt free in {Math.round(this.calculateMonthsToPayOffAccelerated())} monthes!</h2>
-        <h2>Total Mortgage: {userStore.totalMortgage}</h2>
-        <h2>Total Debts: {debtStore.total()}</h2>
+          {this.calculateSavings() >= 0 &&
+            <h1>Airl Financial can save up to <span className="save">${this.calculateSavings()}</span> / month</h1>
+          }
+          <h3>Your current monthly obligations are ${this.calculateCurrentMonthlyObligation()}</h3>
+          <h3>Total Mortgage: ${userStore.totalMortgage}</h3>
+          <h3>Total Debts: ${debtStore.total()}</h3>
+          <h2>New Consolidated Monthly Payment: <span className="save">${this.calculateAirlPayment()}</span> / month</h2>
+          <h3>Add 50% of the cash flow savings to your monthly payments, and you could be debt free in {Math.round(this.calculateMonthsToPayOffAccelerated())} months!</h3>
+          {this.calculateLTV() >= 80 &&
+            <h4>Please Note: The LTV is greater than 80%, and therefore the remaining balance is calculated at 10% interest only.</h4>
+          }
       </div>
     );
   }

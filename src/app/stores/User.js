@@ -8,7 +8,8 @@ class UserStore {
     interestRate : 0,
     termYears : 0,
     amortizationPeriod : 0,
-    confirmation : ''
+    confirmation : '',
+    airlPayment : 0
   };
 
   @observable.ref errors = {};
@@ -22,9 +23,31 @@ class UserStore {
   @observable termYears = +5;
   @observable amortizationPeriod = +25;
 
-  @observable airlFee = 20000;
-  @observable airlRate = 2.5;
-  @observable airlAmortizationPeriod = 30;
+  @action async getSettings() {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/text; charset=UTF-8');
+    console.log('airl getting settings');
+    const options = { method: 'POST', headers };
+    var status;
+    const request = new Request('http://www.impaulse.com/airlcalc/api/init', options);
+    const response = await fetch(request).then(function(res){
+      status = res.status;
+      console.log('Response Status:' + status);
+      return res.json();
+    });
+    console.log('the response: ' + JSON.stringify(response));
+    console.log('new status: ' + status);
+    this.airlFee = response['fee'];
+    this.airlRate = response['rate'];
+    this.airlAmortizationPeriod = response['amortization'];
+    console.log(this.airlAmortizationPeriod);
+    return true;
+  }
+
+  @observable airlFee = 0;
+  @observable airlRate = 0;
+  @observable airlAmortizationPeriod = 0;
+  @observable initialized = this.getSettings();
 
   @observable mortgagePayment(){
     var user = userStore.all;
@@ -125,9 +148,7 @@ class UserStore {
 
 }
 
-autorun(() => {
-
-})
+autorun(() => {})
 
 
 var userStore = window.userStore = new UserStore
