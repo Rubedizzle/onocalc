@@ -25,7 +25,7 @@ class AddDebt extends React.Component{
   render(){
     return(
       <div className="addADebt pure-u-1-2">
-      <form id="newDebtForm" className="pure-form" onSubmit={this.handleSubmit.bind(this)}>
+      <form id="newDebtForm" className="pure-form">
         <fieldset className="pure-group">
           <h2>Add a Debt</h2>
           <select name="debtTypes" className="pure-input-1-2" ref="newDebt" onChange={this.handleChange.bind(this)}>
@@ -38,7 +38,7 @@ class AddDebt extends React.Component{
           <input type="number" step="0.01" min="0" placeholder="Interest Rate (%)" name="debt_interest_rate" label="Interest Rate" ref="interestRate" onChange={(event) => this.updateDebtDetails(event)}/><br />
           <input type="number" step="1" min="0" placeholder="Monthly Payment ($)" name="monthly_payment" label="Monthly Payment" ref="monthlyPayment" onChange={(event) => this.updateDebtDetails(event)}/><br />
           <FormErrors formErrors={this.state.formErrors} />
-          <input type="submit" className="btn" value="Add Debt" disabled={!this.state.formValid}/>
+          <button type="button" className="btn" value="Add Debt" disabled={!this.state.formValid} onClick={this.handleDebtSubmit.bind(this)}>Add Debt</button>
         </fieldset>
       </form>
       </div>
@@ -100,7 +100,7 @@ validateForm() {
     this.debtType= value.pop();
 }
 
-  handleSubmit(e){
+  handleDebtSubmit(e){
     e.preventDefault();
     debtStore.add(
       this.debtType,
@@ -111,6 +111,13 @@ validateForm() {
     this.refs.totalDebt.value = '';
     this.refs.interestRate.value = '';
     this.refs.monthlyPayment.value = '';
+    this.setState({total_debtValid: false,
+    debt_interest_rateValid: false,
+    monthly_paymentValid: false,
+    formValid: false,
+    total_debt: '',
+    debt_interest_rate: '',
+    monthly_payment: ''});
   }
 
 };
