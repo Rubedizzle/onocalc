@@ -22,6 +22,7 @@ class UserStore {
   @observable interestRate = +5;
   @observable termYears = +5;
   @observable amortizationPeriod = +25;
+  @observable income = +0;
 
   @action async getSettings() {
     const headers = new Headers();
@@ -48,7 +49,7 @@ class UserStore {
   @observable airlRate = 0;
   @observable airlAmortizationPeriod = 0;
   @observable initialized = this.getSettings();
-
+  @observable validated = true;
   @observable mortgagePayment(){
     var user = userStore.all;
     var userPayment = parseFloat(0);

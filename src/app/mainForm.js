@@ -1,54 +1,117 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import AddDebt from './AddDebt';
+import FormErrors from './FormErrors';
 
 var DebtList = require('./debtList');
 var Summary = require('./summary');
 
 import userStore from './stores/User'
 
+import {BrowserRouter as Router, Route, Switch, Link, withRouter, Redirect} from 'react-router-dom';
+
 @observer (['UserStore'])
 class MainForm extends React.Component{
 
+  constructor (props) {
+    super(props);
+    this.state = {
+      fireRedirect: false,
+      first_name:'',
+      last_name:'',
+      email: '',
+      phone:'',
+      address:'',
+      city:'',
+      province:'',
+      postal_code:'',
+      income:'',
+      home_value:'',
+      mortgage:'',
+      interest_rate:'',
+      term_years:'',
+      amortization:'',
+      formErrors: { first_name:'',
+                    last_name:'',
+                    email: '',
+                    phone:'',
+                    address:'',
+                    city:'',
+                    province:'',
+                    postal_code:'',
+                    income:'',
+                    home_value:'',
+                    mortgage:'',
+                    interest_rate:'',
+                    term_years:'',
+                    amortization:''},
+      first_nameValid: false,
+      last_nameValid: false,
+      emailValid: false,
+      phoneValid: false,
+      addressValid: false,
+      cityValid: false,
+      provinceValid: false,
+      postal_codeValid: false,
+      incomeValid: false,
+      home_valueValid: false,
+      mortgageValid: false,
+      interest_rateValid: false,
+      term_yearsValid: false,
+      amortizationValid: false,
+      formValid: false
+    }
+  }
+
   render(){
+    const { from } = '/'
+    const { fireRedirect } = this.state
+
     return (
       <div className="mainForm">
-        <form id="cx-details" className="pure-form pure-form-aligned" onSubmit={this.handleSubmit}>
+        <form id="cx-details" className="pure-form pure-form-aligned" onSubmit={this.handleSubmit.bind(this)}>
           <fieldset>
           <div className="logo"><img src="../images/logo.jpg" /></div>
             <div id="personalInfo">
             <div className="pure-control-group error">
               <h2>Contact Information</h2>
-              <input type="text" name="first_name" label="First Name" ref="firstName" placeholder="First Name" onChange={this.setUserDetails} required/>
-              <input type="text" name="last_name" label="Last Name" ref="lastName" placeholder="Last Name" onChange={this.setUserDetails} required/>
-              <input type="email" name="email" label="Email Address" ref="emailAddress" placeholder="Email" onChange={this.setUserDetails} required/>
-              <input type='tel' name="phone" label="Phone Number" ref="phoneNumber" placeholder="Phone Number" onChange={this.setUserDetails} required/>
+              <input type="text" name="first_name" label="First Name" ref="firstName" placeholder="First Name" value={this.state.first_name} onChange={(event) => this.setUserDetails(event)} required/>
+              <input type="text" name="last_name" label="Last Name" ref="lastName" placeholder="Last Name" value={this.state.last_name} onChange={(event) => this.setUserDetails(event)} required/>
+              <input type="email" name="email" label="Email Address" ref="emailAddress" placeholder="Email" value={this.state.email} onChange={(event) => this.setUserDetails(event)} required/>
+              <input type='tel' name="phone" label="Phone Number" ref="phoneNumber" placeholder="Phone Number" value={this.state.phone} onChange={(event) => this.setUserDetails(event)} required/>
             </div>
             <div className="pure-control-group">
-              <input type="text" name="address" label="Street Address" ref="streetAddress" placeholder="Street Address" onChange={this.setUserDetails} required/>
-              <input type="text" name="city" label="City" ref="cityName" placeholder="City" onChange={this.setUserDetails} required/>
-              <input type="text" name="province" label="Province" ref="province" placeholder="Province" onChange={this.setUserDetails} required/>
-              <input type="text" name="postal_code" label="Postal Code" ref="postalCode" placeholder="Postal Code" onChange={this.setUserDetails} required/>
+              <input type="text" name="address" label="Street Address" ref="streetAddress" placeholder="Street Address" value={this.state.address} onChange={(event) => this.setUserDetails(event)} required/>
+              <input type="text" name="city" label="City" ref="cityName" placeholder="City" value={this.state.city} onChange={(event) => this.setUserDetails(event)} required/>
+              <input type="text" name="province" label="Province" ref="province" placeholder="Province" value={this.state.province} onChange={(event) => this.setUserDetails(event)} required/>
+              <input type="text" name="postal_code" label="Postal Code" ref="postalCode" placeholder="Postal Code" value={this.state.postal_code} onChange={(event) => this.setUserDetails(event)} required/>
             </div>
             <div className="pure-control-group">
-              <input type="number" name="income" label="Household Income" ref="householdIncome" placeholder="Household Income" onChange={this.setUserDetails} required/>
+              <input type="number" step="1" min="0" name="income" label="Household Income" ref="householdIncome" placeholder="Household Income" value={this.state.income} onChange={(event) => this.setUserDetails(event)} required/>
             </div>
             </div>
           </fieldset>
           <div id="cmi" className="pure-control-group pure-u-1-2">
             <fieldset>
               <h2>Current Mortgage Information</h2>
-              <input type="number" name="home_value" step="1" min="0" label="Market Value of Home" ref="homeValue" placeholder="Fair Market Value of Home" onChange={this.updateHomeDetails} required/><br />
-              <input type="number" step="1" min="0" name="mortgage" label="Total Mortgage" ref="totalMortgage" placeholder="Total Mortgage Amount" onChange={this.updateHomeDetails} required/><br />
-              <input type="number" step="0.01" min="0" name="interest_rate" label="Mortgage Interest Rate" ref="interestRate" placeholder="Mortgage Interest Rate (%)" onChange={this.updateHomeDetails} required/><br />
-              <input type="number" name="term_years" step="1" min="0" max="10" label="Mortgage Term" ref="termYears" placeholder="Mortgage Term (years)" onChange={this.updateHomeDetails} required/><br />
-              <input type="number" name="amortization" step="5" min="0" max="30" label="Amortization Period" ref="amortizationPeriod" placeholder="Amortization Period (years)" onChange={this.updateHomeDetails} required/>
+              <input type="number" name="home_value" step="1" min="0" label="Market Value of Home" ref="homeValue" placeholder="Fair Market Value of Home ($)" onChange={(event) => this.updateHomeDetails(event)} required/><br />
+              <input type="number" step="1" min="0" name="mortgage" label="Total Mortgage" ref="totalMortgage" placeholder="Total Mortgage Amount ($)" onChange={(event) => this.updateHomeDetails(event)} required/><br />
+              <input type="number" step="0.01" min="0" name="interest_rate" label="Mortgage Interest Rate" ref="interestRate" placeholder="Mortgage Interest Rate (%)" onChange={(event) => this.updateHomeDetails(event)} required/><br />
+              <input type="number" name="term_years" step="1" min="0" max="10" label="Mortgage Term" ref="termYears" placeholder="Mortgage Term (years)" onChange={(event) => this.updateHomeDetails(event)} required/><br />
+              <input type="number" name="amortization" step="5" min="0" max="30" label="Amortization Period" ref="amortizationPeriod" placeholder="Amortization Period (years)" onChange={(event) => this.updateHomeDetails(event)} required/>
             </fieldset>
           </div>
           <AddDebt />
           <DebtList updateDebts={this.updateDebts}/>
           <br/>
           <br/>
+          <div className="panel panel-default">
+           <FormErrors formErrors={this.state.formErrors} />
+          </div>
+          <button type="submit" className="btn btn-primary" disabled={!this.state.formValid}>Calculate Savings</button>
+          {fireRedirect && (
+            <Redirect to={from || '/success'}/>
+          )}
         </form>
       </div>
     );
@@ -56,6 +119,8 @@ class MainForm extends React.Component{
 
   updateHomeDetails(e){
     var field = '';
+    const name = e.target.name;
+    const value = e.target.value;
     // if (e.target.name == 'home_value') {
     //   field = 'homeValue';
     // }
@@ -72,46 +137,114 @@ class MainForm extends React.Component{
     //   field = 'amortizationPeriod';
     // }
     // userStore.setField(field,e.target.value);
-      if (e.target.name == 'home_value') {
-        userStore.homeValue = e.target.value;
+      if (name == 'home_value') {
+        userStore.homeValue = value;
       }
-      else if (e.target.name == "mortgage"){
-        userStore.totalMortgage = e.target.value;
+      else if (name == "mortgage"){
+        userStore.totalMortgage = value;
       }
-      else if (e.target.name == "interest_rate") {
-        userStore.interestRate = e.target.value;
+      else if (name == "interest_rate") {
+        userStore.interestRate = value;
       }
-      else if (e.target.name == "term_years") {
-        userStore.termYears = e.target.value;
+      else if (name == "term_years") {
+        userStore.termYears = value;
       }
-      else if (e.target.name == "amortization") {
-        userStore.amortizationPeriod = e.target.value;
+      else if (name == "amortization") {
+        userStore.amortizationPeriod = value;
       }
+  this.setState({[name]: value},
+                      () => { this.validateField(name, value) });
   }
 
   setUserDetails(e){
     console.log(e.target.name);
-    userStore.setField(e.target.name,e.target.value);
+    const name = e.target.name;
+    const value = e.target.value;
+    userStore.setField(name,value);
+    this.setState({[name]: value},
+                    () => { this.validateField(name, value) });
   }
+
+  validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let emailValid = this.state.emailValid;
+    let incomeValid = this.state.incomeValid;
+    let home_valueValid = this.state.home_valueValid;
+    let mortgageValid = this.state.mortgageValid;
+    let interest_rateValid = this.state.interest_rateValid;
+    let term_yearsValid = this.state.term_yearsValid;
+    let amortizationValid = this.state.amortizationValid;
+
+    switch(fieldName) {
+      case 'email':
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        fieldValidationErrors.email = emailValid ? '' : 'Email address is invalid';
+        console.log(fieldValidationErrors.email);
+        break;
+      case 'income':
+        incomeValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && value > 0;
+        fieldValidationErrors.income = incomeValid ? '' : 'Household Income is invalid';
+        console.log(fieldValidationErrors.income);
+        break;
+      case 'home_value':
+        home_valueValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && value > 0;
+        fieldValidationErrors.home_value = home_valueValid ? '' : 'Market value of Home is invalid';
+        console.log(fieldValidationErrors.home_value);
+        break;
+      case 'mortgage':
+        mortgageValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && +value <= +this.state.home_value;
+        console.log('home value: ' + this.state.home_value);
+        console.log('mortgage value: ' + value);
+        fieldValidationErrors.mortgage = mortgageValid ? '' : 'Mortgage value should be less than Fair Home Value';
+        console.log(fieldValidationErrors.mortgage);
+        break;
+      case 'interest_rate':
+        interest_rateValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && value > 0 && value <= 10;
+        fieldValidationErrors.interest_rate = interest_rateValid ? '' : 'Interest Rate should be between 0 and 10';
+        console.log(fieldValidationErrors.interest_rate);
+        break;
+      case 'term_years':
+        term_yearsValid = value.match(/^\d*$/) && value > 0 && value <= 10;
+        fieldValidationErrors.term_years = term_yearsValid ? '' : 'Mortgage Term should be between 0 and 10';
+        console.log(fieldValidationErrors.term_years);
+        break;
+      case 'amortization':
+        amortizationValid = value.match(/^\d*$/) && value >= 5 && value <= 30;;
+        fieldValidationErrors.amortization = amortizationValid ? '' : 'Amortization Period should be between 5 and 30';
+        console.log(fieldValidationErrors.amortization);
+        break;
+      default:
+        break;
+    }
+    this.setState({formErrors: fieldValidationErrors,
+                    emailValid: emailValid,
+                    incomeValid: incomeValid,
+                    home_valueValid: home_valueValid,
+                    mortgageValid: mortgageValid,
+                    interest_rateValid: interest_rateValid,
+                    term_yearsValid: term_yearsValid,
+                    amortizationValid: amortizationValid
+                  }, this.validateForm);
+  }
+
+  validateForm() {
+    this.setState({formValid: this.state.emailValid &&
+                              this.state.incomeValid &&
+                              this.state.home_valueValid &&
+                              this.state.mortgageValid &&
+                              this.state.interest_rateValid &&
+                              this.state.term_yearsValid &&
+                              this.state.amortizationValid});
+  }
+
 
   handleSubmit(e){
     e.preventDefault();
-    this.userStore.setField({
-      firstName:this.refs.firstName.value,
-      lastName:this.refs.lastName.value,
-      emailAddress:this.refs.emailAddress.value,
-      phoneNumber:this.refs.phoneNumber.value,
-      streetAddress:this.refs.streetAddress.value,
-      cityName:this.refs.cityName.value,
-      province:this.refs.province.value,
-      postalCode:this.refs.postalCode.value,
-      householdIncome:this.refs.householdIncome.value,
-      homeValue:this.refs.homeValue.value,
-      totalMortgage:this.refs.totalMortgage.value,
-      interestRate:this.refs.interestRate.value,
-      termYears:this.refs.termYears.value,
-      amortizationPeriod:this.refs.amortizationPeriod.value
-    })
+    console.log('form valid:' + this.state.formValid);
+    console.log('form errors:' + this.state.formErrors);
+      if (this.state.formValid == true ){
+        this.setState({ fireRedirect: true });
+      }
   }
 
   updateDebts(newDebts){

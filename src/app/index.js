@@ -47,19 +47,27 @@ class App extends React.Component{
 };
 
 class Calculator extends React.Component{
+
+  constructor(){
+      super();
+      this.state = {
+        validated: true
+      }
+    }
+
   onSuccess(){
     history.push('./success')
   }
 
   render(){
+    const { validated } = userStore.validated
     console.log('test');
     return (
       <div className="container">
         <div className="innContainer centerText">
             <div className="pure-g">
             <div id="calculator">
-              <MainForm success={this.onSuccess} />
-              <Link to={'/success'}><button className="btn">CALCULATE</button></Link>
+              <MainForm success={this.onSuccess}/>
             </div>
           </div>
         </div>
