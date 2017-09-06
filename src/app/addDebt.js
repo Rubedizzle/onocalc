@@ -34,9 +34,9 @@ class AddDebt extends React.Component{
             <option value="Line of Credit">Line of Credit</option>
             <option value="Student Loan">Student Loan</option>
           </select><br /><br />
-          <input type="number" step="1" min="0" placeholder="Total Debt Amount ($)" name="total_debt" label="Total Debt Amount" ref="totalDebt" onChange={(event) => this.updateDebtDetails(event)}/><br />
-          <input type="number" step="0.01" min="0" placeholder="Interest Rate (%)" name="debt_interest_rate" label="Interest Rate" ref="interestRate" onChange={(event) => this.updateDebtDetails(event)}/><br />
-          <input type="number" step="1" min="0" placeholder="Monthly Payment ($)" name="monthly_payment" label="Monthly Payment" ref="monthlyPayment" onChange={(event) => this.updateDebtDetails(event)}/><br />
+          <input type="number" step="1" min="0" placeholder="Total Debt Amount ($)" name="total_debt" label="Total Debt Amount" ref="totalDebt" onChange={(event) => this.updateDebtDetails(event)}  className={this.errorClass(this.state.formErrors.total_debt)}/><br />
+          <input type="number" step="0.01" min="0" placeholder="Interest Rate (%)" name="debt_interest_rate" label="Interest Rate" ref="interestRate" onChange={(event) => this.updateDebtDetails(event)} className={this.errorClass(this.state.formErrors.debt_interest_rate)}/><br />
+          <input type="number" step="1" min="0" placeholder="Monthly Payment ($)" name="monthly_payment" label="Monthly Payment" ref="monthlyPayment" onChange={(event) => this.updateDebtDetails(event)} className={this.errorClass(this.state.formErrors.monthly_payment)}/><br />
           <FormErrors formErrors={this.state.formErrors} />
           <button type="button" className="btn" value="Add Debt" disabled={!this.state.formValid} onClick={this.handleDebtSubmit.bind(this)}>Add Debt</button>
         </fieldset>
@@ -44,6 +44,10 @@ class AddDebt extends React.Component{
       </div>
     )
 
+  }
+
+  errorClass(error) {
+     return(error.length === 0 ? '' : 'has-error');
   }
 
 updateDebtDetails(e){
@@ -62,16 +66,16 @@ validateField(fieldName, value) {
   switch(fieldName) {
     case 'total_debt':
       total_debtValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/);
-      fieldValidationErrors.total_debt = total_debtValid ? '' : ' is invalid';
+      fieldValidationErrors.total_debt = total_debtValid ? '' : 'Total Debt Amount is invalid';
       break;
     case 'debt_interest_rate':
-      debt_interest_rateValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && value > 0 && value <= 100;
+      debt_interest_rateValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && value >= 0 && value <= 30;
       console.log(debt_interest_rateValid);
-      fieldValidationErrors.debt_interest_rate = debt_interest_rateValid ? '' : 'Debt Interest Rate must be between 0 and 100';
+      fieldValidationErrors.debt_interest_rate = debt_interest_rateValid ? '' : 'Debt Interest Rate must be between 0 and 30';
       break;
     case 'monthly_payment':
       monthly_paymentValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && +value < +this.state.total_debt;
-      fieldValidationErrors.monthly_payment = monthly_paymentValid ? '' : 'Monthly Payment must be less than Total Debt';
+      fieldValidationErrors.monthly_payment = monthly_paymentValid ? '' : 'Monthly Payment must be less than the Total Debt';
       break;
     default:
       break;

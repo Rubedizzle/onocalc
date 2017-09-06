@@ -182,7 +182,10 @@ class ScheduleFollowUp extends React.Component{
         current_mortgage_payment: userStore.mortgagePayment(),
         current_debt_payment: debtStore.debtMonthlyPayment(),
         airl_new_payment: userStore.getField('airlPayment'),
-        debtList: JSON.stringify(debtStore.getDebts())
+        debtList: JSON.stringify(debtStore.getDebts()),
+        credit_level: userStore.getField('credit_level'),
+        credit_score: userStore.getField('credit_score'),
+        comments: userStore.getField('comments')
       })
     };
 
@@ -214,18 +217,42 @@ class ScheduleFollowUp extends React.Component{
 
     return (
       <div id="followUp">
+      <hr/>
         <form id="submitToAirl" className="pure-form" onSubmit={this.handleSubmit.bind(this)}>
           <input type="checkbox" name="agreedToFollowUp" ref="agreedToFollowUp" onClick={this.toggle.bind(this)} />
           <label>&nbsp;I would like an Airl Financial representative to follow-up with me.</label><br /><br />
+          {!this.state.checkboxState &&
+          <div className="creditComments">
+          <label>How would you rate your credit? <i>(optional)</i></label><br/>
+          <select name="credit_level" className="pure-input-1-1 credit_level" ref="credit_level" onChange={this.handleChange.bind(this)}>
+            <option value="Not Selected">Select one</option>
+            <option value="Very Good">Very Good</option>
+            <option value="Good">Good</option>
+            <option value="Bad">Bad</option>
+            <option value="Very Bad">Very Bad</option>
+          </select><br/><br/>
+          <label>Actual Credit Score <i>(optional)</i></label><br/>
+          <input type="number" step="1" min="0" max="900" name="credit_score" ref="credit_score" onChange={this.handleChange.bind(this)}/><br/><br/>
+          <label>Comments <i>(optional)</i></label><br/>
+          <textarea name="comments" ref="comments" placeholder="Enter any additional details here..." cols="30" rows="5" onChange={this.handleChange.bind(this)}/><br/><br/>
+          </div>
+          }
           <button disabled={this.state.checkboxState} type="submit" value="Submit to Airl" className="btn">Submit to Airl</button>
         </form>
         {fireRedirect && (
           <Redirect to={from || '/confirmation'}/>
         )}
+      <h5 className="disclaimer">Disclaimer: Financial numbers to be verified, actual savings may vary. For illustration purposes only.</h5>
       </div>
     );
 
   }
+
+handleChange(e){
+  const name = e.target.name;
+  const value = e.target.value;
+  userStore.setField(name,value);
+}
 
 }
 

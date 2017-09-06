@@ -64,7 +64,7 @@ class DebtList extends React.Component{
         <div className = "pure-g">
           {debts.length == 0 &&
               <div className="pure-u-1-3">
-                No debts added - please add a debt below!
+                No debts added - add any debts from above!
               </div>
           }
               {debts}

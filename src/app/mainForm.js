@@ -73,11 +73,11 @@ class MainForm extends React.Component{
           <fieldset>
           <div className="logo"><img src="../images/logo.jpg" /></div>
             <div id="personalInfo">
-            <div className="pure-control-group error">
+            <div className="pure-control-group">
               <h2>Contact Information</h2>
-              <input type="text" name="first_name" label="First Name" ref="firstName" placeholder="First Name" value={this.state.first_name} onChange={(event) => this.setUserDetails(event)} required/>
+              <input type="text" name="first_name" label="First Name" ref="firstName" placeholder="First Name" value={this.state.first_name} onChange={(event) => this.setUserDetails(event)}required/>
               <input type="text" name="last_name" label="Last Name" ref="lastName" placeholder="Last Name" value={this.state.last_name} onChange={(event) => this.setUserDetails(event)} required/>
-              <input type="email" name="email" label="Email Address" ref="emailAddress" placeholder="Email" value={this.state.email} onChange={(event) => this.setUserDetails(event)} required/>
+              <input type="email" name="email" label="Email Address" ref="emailAddress" placeholder="Email" value={this.state.email} onChange={(event) => this.setUserDetails(event)} className={this.errorClass(this.state.formErrors.email)} required/>
               <input type='tel' name="phone" label="Phone Number" ref="phoneNumber" placeholder="Phone Number" value={this.state.phone} onChange={(event) => this.setUserDetails(event)} required/>
             </div>
             <div className="pure-control-group">
@@ -87,18 +87,18 @@ class MainForm extends React.Component{
               <input type="text" name="postal_code" label="Postal Code" ref="postalCode" placeholder="Postal Code" value={this.state.postal_code} onChange={(event) => this.setUserDetails(event)} required/>
             </div>
             <div className="pure-control-group">
-              <input type="number" step="1" min="0" name="income" label="Household Income" ref="householdIncome" placeholder="Household Income" value={this.state.income} onChange={(event) => this.setUserDetails(event)} required/>
+              <input type="number" step="1" min="0" name="income" label="Gross Household Annual Income" ref="householdIncome" placeholder="Gross Household Annual Income ($)" value={this.state.income} onChange={(event) => this.setUserDetails(event)} className={`incomeInput ${this.errorClass(this.state.formErrors.income)}`} required/>
             </div>
             </div>
           </fieldset>
           <div id="cmi" className="pure-control-group pure-u-1-2">
             <fieldset>
               <h2>Current Mortgage Information</h2>
-              <input type="number" name="home_value" step="1" min="0" label="Market Value of Home" ref="homeValue" placeholder="Fair Market Value of Home ($)" onChange={(event) => this.updateHomeDetails(event)} required/><br />
-              <input type="number" step="1" min="0" name="mortgage" label="Total Mortgage" ref="totalMortgage" placeholder="Total Mortgage Amount ($)" onChange={(event) => this.updateHomeDetails(event)} required/><br />
-              <input type="number" step="0.01" min="0" name="interest_rate" label="Mortgage Interest Rate" ref="interestRate" placeholder="Mortgage Interest Rate (%)" onChange={(event) => this.updateHomeDetails(event)} required/><br />
-              <input type="number" name="term_years" step="1" min="0" max="10" label="Mortgage Term" ref="termYears" placeholder="Mortgage Term (years)" onChange={(event) => this.updateHomeDetails(event)} required/><br />
-              <input type="number" name="amortization" step="5" min="0" max="30" label="Amortization Period" ref="amortizationPeriod" placeholder="Amortization Period (years)" onChange={(event) => this.updateHomeDetails(event)} required/>
+              <input type="number" name="home_value" step="1" min="0" label="Market Value of Home" ref="homeValue" placeholder="Fair Market Value of Home ($)" onChange={(event) => this.updateHomeDetails(event)} className={this.errorClass(this.state.formErrors.home_value)} required/><br />
+              <input type="number" step="1" min="0" name="mortgage" label="Total Mortgage" ref="totalMortgage" placeholder="Total Mortgage Amount ($)" onChange={(event) => this.updateHomeDetails(event)} className={this.errorClass(this.state.formErrors.mortgage)} required/><br />
+              <input type="number" step="0.01" min="0" max="30" name="interest_rate" label="Mortgage Interest Rate" ref="interestRate" placeholder="Mortgage Interest Rate (%)" onChange={(event) => this.updateHomeDetails(event)} className={this.errorClass(this.state.formErrors.interest_rate)} required/><br />
+              <input type="number" name="term_years" step="1" min="0" max="10" label="Mortgage Term" ref="termYears" placeholder="Mortgage Term (years)" onChange={(event) => this.updateHomeDetails(event)} className={this.errorClass(this.state.formErrors.term_years)} required/><br />
+              <input type="number" name="amortization" step="5" min="0" max="30" label="Amortization Period" ref="amortizationPeriod" placeholder="Amortization Period (years)" onChange={(event) => this.updateHomeDetails(event)} className={this.errorClass(this.state.formErrors.amortization)} required/>
             </fieldset>
           </div>
           <AddDebt />
@@ -115,6 +115,10 @@ class MainForm extends React.Component{
         </form>
       </div>
     );
+  }
+
+  errorClass(error) {
+     return(error.length === 0 ? '' : 'has-error');
   }
 
   updateHomeDetails(e){
@@ -183,7 +187,7 @@ class MainForm extends React.Component{
         break;
       case 'income':
         incomeValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && value > 0;
-        fieldValidationErrors.income = incomeValid ? '' : 'Household Income is invalid';
+        fieldValidationErrors.income = incomeValid ? '' : 'Gross Household Annual Income is invalid';
         console.log(fieldValidationErrors.income);
         break;
       case 'home_value':
@@ -195,7 +199,7 @@ class MainForm extends React.Component{
         mortgageValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && +value <= +this.state.home_value;
         console.log('home value: ' + this.state.home_value);
         console.log('mortgage value: ' + value);
-        fieldValidationErrors.mortgage = mortgageValid ? '' : 'Mortgage value should be less than Fair Home Value';
+        fieldValidationErrors.mortgage = mortgageValid ? '' : 'Mortgage value should be less than the Fair Market Value of the Home';
         console.log(fieldValidationErrors.mortgage);
         break;
       case 'interest_rate':

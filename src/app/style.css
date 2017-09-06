@@ -156,6 +156,28 @@ h2 {
   clear: both;
 }
 
+.has-error{
+  border: 2px solid red !important;
+}
+
+.incomeInput{
+  max-width: 320px;
+      width: 100%;
+}
+
+.credit_level{
+  height: 3em !important;
+}
+
+.comments{
+
+}
+
+.disclaimer{
+  margin-top:30px;
+
+}
+
 @media screen and (max-width: 928px) {
   #cx-details input {
     width: 90% !important;
@@ -175,6 +197,10 @@ h2 {
     width: 100%;
     margin: 0 0 1em 0;
     padding: 1em 0;
+  }
+  .incomeInput{
+    max-width: initial;
+        width: 100%;
   }
 }
 

@@ -23,6 +23,9 @@ class UserStore {
   @observable termYears = +5;
   @observable amortizationPeriod = +25;
   @observable income = +0;
+  @observable credit_level = '';
+  @observable credit_score = '';
+  @observable comments = '';
 
   @action async getSettings() {
     const headers = new Headers();

@@ -19,6 +19,9 @@ class Confirmation extends React.Component{
         <h3>Your Confirmation Number:</h3> <span id="confirmationNum" className="ticket">{ userStore.getConfID() }</span>
         <h2>Thanks <strong>{userStore.getField('first_name')}</strong>! We have sent a confirmation email to {userStore.getField('email')}</h2>
         <h3>One of our representatives will be in contact with you shortly.</h3>
+        <a href="http://airlfinancial.com">
+          <button type="button" className="btn btn-primary"><i className="fa fa-chevron-circle-left" aria-hidden="true"></i> Back to Airl Financial</button>
+        </a>
       </div>
       </div>
       </div>
