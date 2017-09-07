@@ -7,7 +7,8 @@ class DebtItem extends React.Component{
       creditCard: 'fa-credit-card',
       car: 'fa-car',
       creditLine: 'fa-university',
-      loan: 'fa-graduation-cap'
+      loan: 'fa-graduation-cap',
+      other: 'fa-usd'
     };
   }
 
@@ -23,6 +24,8 @@ class DebtItem extends React.Component{
       debtIcon = this.icons.creditLine;
     } else if (debtType === 'Student Loan'){
       debtIcon = this.icons.loan;
+    } else if (debtType === 'Other'){
+      debtIcon = this.icons.other;
     }
 
     return (

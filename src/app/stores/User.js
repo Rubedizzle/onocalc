@@ -9,7 +9,11 @@ class UserStore {
     termYears : 0,
     amortizationPeriod : 0,
     confirmation : '',
-    airlPayment : 0
+    airlPayment : 0,
+    income: +0,
+    credit_level: '',
+    credit_score: '',
+    comments: ''
   };
 
   @observable.ref errors = {};

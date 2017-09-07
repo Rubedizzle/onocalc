@@ -27,12 +27,14 @@ class AddDebt extends React.Component{
       <div className="addADebt pure-u-1-2">
       <form id="newDebtForm" className="pure-form">
         <fieldset className="pure-group">
-          <h2>Add a Debt</h2>
+          <h2>Add a Debt<br/>
+          <span className="req_optional">(optional)</span></h2>
           <select name="debtTypes" className="pure-input-1-2" ref="newDebt" onChange={this.handleChange.bind(this)}>
             <option value="Credit Card">Credit Card</option>
             <option value="Car Loan">Car Loan</option>
             <option value="Line of Credit">Line of Credit</option>
             <option value="Student Loan">Student Loan</option>
+            <option value="Other">Other</option>
           </select><br /><br />
           <input type="number" step="1" min="0" placeholder="Total Debt Amount ($)" name="total_debt" label="Total Debt Amount" ref="totalDebt" onChange={(event) => this.updateDebtDetails(event)}  className={this.errorClass(this.state.formErrors.total_debt)}/><br />
           <input type="number" step="0.01" min="0" placeholder="Interest Rate (%)" name="debt_interest_rate" label="Interest Rate" ref="interestRate" onChange={(event) => this.updateDebtDetails(event)} className={this.errorClass(this.state.formErrors.debt_interest_rate)}/><br />

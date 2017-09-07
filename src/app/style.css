@@ -82,6 +82,10 @@ h2 {
 }
 
 .btn:hover {
+  background-color: #133650;
+}
+
+.btn:disabled {
   background-color: #414141;
 }
 
@@ -91,6 +95,20 @@ h2 {
 
 .fr {
   float: right;
+}
+
+.req_optional{
+  text-align:center;
+  display:block;
+  font-size: 0.5em;
+}
+
+.formInstructions{
+  text-align:center;
+  display:block;
+  font-size:1em;
+  font-weight: bold;
+  margin: 0.2em 0.1em;
 }
 
 #cmi input {

@@ -74,8 +74,9 @@ class MainForm extends React.Component{
           <div className="logo"><img src="../images/logo.jpg" /></div>
             <div id="personalInfo">
             <div className="pure-control-group">
-              <h2>Contact Information</h2>
-              <input type="text" name="first_name" label="First Name" ref="firstName" placeholder="First Name" value={this.state.first_name} onChange={(event) => this.setUserDetails(event)}required/>
+              <h2>Contact Information<br/>
+              <span className="req_optional">(required)</span></h2>
+              <input type="text" name="first_name" label="First Name" ref="firstName" placeholder="First Name" value={this.state.first_name} onChange={(event) => this.setUserDetails(event)} required/>
               <input type="text" name="last_name" label="Last Name" ref="lastName" placeholder="Last Name" value={this.state.last_name} onChange={(event) => this.setUserDetails(event)} required/>
               <input type="email" name="email" label="Email Address" ref="emailAddress" placeholder="Email" value={this.state.email} onChange={(event) => this.setUserDetails(event)} className={this.errorClass(this.state.formErrors.email)} required/>
               <input type='tel' name="phone" label="Phone Number" ref="phoneNumber" placeholder="Phone Number" value={this.state.phone} onChange={(event) => this.setUserDetails(event)} required/>
@@ -93,7 +94,8 @@ class MainForm extends React.Component{
           </fieldset>
           <div id="cmi" className="pure-control-group pure-u-1-2">
             <fieldset>
-              <h2>Current Mortgage Information</h2>
+              <h2>Current Mortgage Information<br/>
+              <span className="req_optional">(required)</span></h2>
               <input type="number" name="home_value" step="1" min="0" label="Market Value of Home" ref="homeValue" placeholder="Fair Market Value of Home ($)" onChange={(event) => this.updateHomeDetails(event)} className={this.errorClass(this.state.formErrors.home_value)} required/><br />
               <input type="number" step="1" min="0" name="mortgage" label="Total Mortgage" ref="totalMortgage" placeholder="Total Mortgage Amount ($)" onChange={(event) => this.updateHomeDetails(event)} className={this.errorClass(this.state.formErrors.mortgage)} required/><br />
               <input type="number" step="0.01" min="0" max="30" name="interest_rate" label="Mortgage Interest Rate" ref="interestRate" placeholder="Mortgage Interest Rate (%)" onChange={(event) => this.updateHomeDetails(event)} className={this.errorClass(this.state.formErrors.interest_rate)} required/><br />
@@ -106,6 +108,7 @@ class MainForm extends React.Component{
           <br/>
           <br/>
           <div className="panel panel-default">
+           <span className="formInstructions">{this.state.formValid ? '' : 'Please fill in all the required fields above'}</span>
            <FormErrors formErrors={this.state.formErrors} />
           </div>
           <button type="submit" className="btn btn-primary" disabled={!this.state.formValid}>Calculate Savings</button>
@@ -238,9 +241,28 @@ class MainForm extends React.Component{
                               this.state.mortgageValid &&
                               this.state.interest_rateValid &&
                               this.state.term_yearsValid &&
-                              this.state.amortizationValid});
+                              this.state.amortizationValid &&
+                              this.contactValid()});
   }
 
+  contactValid(){
+    return (this.fieldFilled(this.stripChar(userStore.getField('first_name'))) &&
+          this.fieldFilled(this.stripChar(userStore.getField('last_name'))) &&
+          this.fieldFilled(this.stripChar(userStore.getField('email'))) &&
+          this.fieldFilled(this.stripChar(userStore.getField('phone'))) &&
+          this.fieldFilled(this.stripChar(userStore.getField('address'))) &&
+          this.fieldFilled(this.stripChar(userStore.getField('city'))) &&
+          this.fieldFilled(this.stripChar(userStore.getField('province'))) &&
+          this.fieldFilled(this.stripChar(userStore.getField('postal_code'))) )
+  }
+
+  stripChar(value){
+    return (value.replace(/\s/g,''))
+  }
+
+  fieldFilled(field){
+    return (field.length > 0 ? true : false)
+  }
 
   handleSubmit(e){
     e.preventDefault();
