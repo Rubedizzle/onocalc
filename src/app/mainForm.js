@@ -108,7 +108,7 @@ class MainForm extends React.Component{
           <br/>
           <br/>
           <div className="panel panel-default">
-           <span className="formInstructions">{this.state.formValid ? '' : 'Please fill in all the required fields above'}</span>
+           <span className="formInstructions">{this.state.formValid ? '' : 'Please fill in all the required fields above, and check what you may have missed.'}</span>
            <FormErrors formErrors={this.state.formErrors} />
           </div>
           <button type="submit" className="btn btn-primary" disabled={!this.state.formValid}>Calculate Savings</button>
