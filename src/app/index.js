@@ -61,7 +61,7 @@ class Calculator extends React.Component{
 
   render(){
     const { validated } = userStore.validated
-    console.log('test');
+    //console.log('test');
     return (
       <div className="container">
         <div className="innContainer centerText">
@@ -114,7 +114,7 @@ class Entry extends React.Component{
 class Success extends React.Component{
 
   render(){
-    console.log('success');
+    //console.log('success');
     return (
       <div className="container">
         <div className="innContainer centerText">
@@ -144,7 +144,7 @@ class ScheduleFollowUp extends React.Component{
   async handleSubmit(e){
     e.preventDefault();
     var success = await this.add('add');
-    console.log(success);
+    //console.log(success);
       if (success == true){
         this.setState({ fireRedirect: true });
       }
@@ -154,13 +154,13 @@ class ScheduleFollowUp extends React.Component{
   this.setState({
     checkboxState: !this.state.checkboxState
   });
-  console.log (!this.state.checkboxState + ' switched to ' + this.state.checkboxState);
+  //console.log (!this.state.checkboxState + ' switched to ' + this.state.checkboxState);
 }
 
   @action async add(data) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/text; charset=UTF-8');
-    console.log('airl payment sending ' + userStore.airlPayment)
+    //console.log('airl payment sending ' + userStore.airlPayment)
     const options = {
       method: 'POST',
       headers,
@@ -190,22 +190,22 @@ class ScheduleFollowUp extends React.Component{
     };
 
     var status;
-    console.log('The data: ' + options.body);
-    const request = new Request('http://www.impaulse.com/airlcalc/api/add', options);
+    //console.log('The data: ' + options.body);
+    const request = new Request('http://airlfinancial.com/rest/api/add', options);
     const response = await fetch(request).then(function(res){
       status = res.status;
-      console.log('Response Status:' + status);
+      //console.log('Response Status:' + status);
       return res.json()
     });
-    console.log('the response: ' + JSON.stringify(response));
+    //console.log('the response: ' + JSON.stringify(response));
     data = response['ID'];
-    console.log("status: " + status);
+    //console.log("status: " + status);
     //console.log("response value: " + response.text());
     if (status == 201 || status == 200){
       userStore.setConfID(data);
       return true;
     } else {
-      console.log('not 200 - fail');
+      //console.log('not 200 - fail');
       return false;
     };
   }

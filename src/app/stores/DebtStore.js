@@ -5,7 +5,7 @@ class DebtStore {
   @observable all = [];
 
   @action add(debt, total, interest, monthly ) {
-    console.log('attemping to add');
+    //console.log('attemping to add');
     var newDebt = {
       debtType: debt,
       totalDebt: total,
@@ -13,16 +13,16 @@ class DebtStore {
       monthlyPayment:monthly
     };
     debtStore.all.push(newDebt);
-    console.log('added');
+    //console.log('added');
   }
 
   @action del(item) {
-    console.log('attempting to delete');
+    //console.log('attempting to delete');
     var updatedDebts = debtStore.all.filter(function(val,index){
       return item !== val;
     });
     debtStore.all = updatedDebts;
-    console.log('done');
+    //console.log('done');
   }
 
   @observable list(){
@@ -74,5 +74,5 @@ var debtStore = window.debtStore = new DebtStore
 export default debtStore;
 
 autorun(() => {
-  console.log(debtStore.all);
+  //console.log(debtStore.all);
 })

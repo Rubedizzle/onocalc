@@ -35,13 +35,14 @@ class DebtItem extends React.Component{
           <p>Total Debt: ${this.props.debt.totalDebt}</p>
           <p>Interest Rate: {this.props.debt.interestRate}%</p>
           <p>Monthly Payment: ${this.props.debt.monthlyPayment}</p>
-          <button className="button-small pure-button" onClick={this.handleDelete}>Delete Debt</button>
+          <button className="button-small pure-button" onClick={this.handleDelete.bind(this)}>Delete Debt</button>
         </div>
     );
 
   }
 
-  handleDelete = () => {
+  handleDelete = (e) => {
+    e.preventDefault();
     this.props.onDelete(this.props.debt);
   }
 

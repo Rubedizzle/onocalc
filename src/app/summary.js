@@ -17,10 +17,10 @@ class Summary extends React.Component{
     var P = userStore.totalMortgage;
     var I = userStore.interestRate / 100 / 12;
     var N = userStore.amortizationPeriod * 12;
-    console.log('calculating');
-    console.log('total mortgage: ' + P);
-    console.log('interest rate over 12: ' + I);
-    console.log('amortization period in months: ' + N);
+    //console.log('calculating');
+    //console.log('total mortgage: ' + P);
+    //console.log('interest rate over 12: ' + I);
+    //console.log('amortization period in months: ' + N);
     var payment = Math.round((P * I * (Math.pow(1 + I, N)) / (Math.pow(1 + I, N) - 1)) * 100) / 100;
     return payment;
   }
@@ -37,11 +37,11 @@ class Summary extends React.Component{
     var P = +userStore.totalMortgage + +userStore.airlFee + debtStore.total();
     var I = userStore.airlRate / 100 / 12;
     var N = userStore.airlAmortizationPeriod * 12;
-    console.log('P: ' + P);
-    console.log(I);
-    console.log(N);
+    //console.log('P: ' + P);
+    //console.log(I);
+    //console.log(N);
     var payment = Math.round((P * I * (Math.pow(1 + I, N)) / (Math.pow(1 + I, N) - 1)) * 100) / 100;
-    console.log(payment);
+    //console.log(payment);
     userStore.setField('airlPayment',payment);
     return +Math.round(payment).toFixed(2);
   }
@@ -67,7 +67,7 @@ class Summary extends React.Component{
   }
 
   render(){
-    console.log(debtStore.list);
+    //console.log(debtStore.list);
     return (
       <div className="results">
           {this.calculateSavings() >= 0 &&

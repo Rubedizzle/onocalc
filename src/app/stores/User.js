@@ -34,21 +34,21 @@ class UserStore {
   @action async getSettings() {
     const headers = new Headers();
     headers.append('Content-Type', 'application/text; charset=UTF-8');
-    console.log('airl getting settings');
+    //console.log('airl getting settings');
     const options = { method: 'POST', headers };
     var status;
-    const request = new Request('http://www.impaulse.com/airlcalc/api/init', options);
+    const request = new Request('http://www.airlfinancial.com/rest/api/init', options);
     const response = await fetch(request).then(function(res){
       status = res.status;
-      console.log('Response Status:' + status);
+      //console.log('Response Status:' + status);
       return res.json();
     });
-    console.log('the response: ' + JSON.stringify(response));
-    console.log('new status: ' + status);
+    //console.log('the response: ' + JSON.stringify(response));
+    //console.log('new status: ' + status);
     this.airlFee = response['fee'];
     this.airlRate = response['rate'];
     this.airlAmortizationPeriod = response['amortization'];
-    console.log(this.airlAmortizationPeriod);
+    //console.log(this.airlAmortizationPeriod);
     return true;
   }
 
@@ -66,7 +66,7 @@ class UserStore {
     var N = this.amortizationPeriod * 12;
 
     userPayment = Math.round(P * ( I * (Math.pow(1 + I, N)) / (Math.pow(1 + I, N) - 1)) * 100) / 100;
-    console.log('userpayment: ' + userPayment);
+    //console.log('userpayment: ' + userPayment);
     return userPayment;
   }
 
@@ -92,14 +92,14 @@ class UserStore {
   }
 
   @action setField(field,data){
-        console.log('setting field: ' + field);
+        //console.log('setting field: ' + field);
         userStore.all[field] = data;
-        console.log(userStore.all);
+        //console.log(userStore.all);
   }
 
   @action getField(field){
-    console.log('getting field: ' + field);
-    console.log('returning ' + userStore.all[field]);
+    //console.log('getting field: ' + field);
+    //console.log('returning ' + userStore.all[field]);
       return userStore.all[field];
   }
 
@@ -111,9 +111,9 @@ class UserStore {
         () => !this.pending,
         () => {
             if (this.submitted){
-                console.log('performing some side effect');
+                //console.log('performing some side effect');
             } else {
-                console.log('Failed');
+                //console.log('Failed');
             }
         });
   }

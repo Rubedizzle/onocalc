@@ -72,7 +72,7 @@ validateField(fieldName, value) {
       break;
     case 'debt_interest_rate':
       debt_interest_rateValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && value >= 0 && value <= 30;
-      console.log(debt_interest_rateValid);
+      //console.log(debt_interest_rateValid);
       fieldValidationErrors.debt_interest_rate = debt_interest_rateValid ? '' : 'Debt Interest Rate must be between 0 and 30';
       break;
     case 'monthly_payment':

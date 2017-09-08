@@ -164,7 +164,7 @@ class MainForm extends React.Component{
   }
 
   setUserDetails(e){
-    console.log(e.target.name);
+    //console.log(e.target.name);
     const name = e.target.name;
     const value = e.target.value;
     userStore.setField(name,value);
@@ -186,39 +186,39 @@ class MainForm extends React.Component{
       case 'email':
         emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
         fieldValidationErrors.email = emailValid ? '' : 'Email address is invalid';
-        console.log(fieldValidationErrors.email);
+        //console.log(fieldValidationErrors.email);
         break;
       case 'income':
         incomeValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && value > 0;
         fieldValidationErrors.income = incomeValid ? '' : 'Gross Household Annual Income is invalid';
-        console.log(fieldValidationErrors.income);
+        //console.log(fieldValidationErrors.income);
         break;
       case 'home_value':
         home_valueValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && value > 0;
         fieldValidationErrors.home_value = home_valueValid ? '' : 'Market value of Home is invalid';
-        console.log(fieldValidationErrors.home_value);
+        //console.log(fieldValidationErrors.home_value);
         break;
       case 'mortgage':
         mortgageValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && +value <= +this.state.home_value;
-        console.log('home value: ' + this.state.home_value);
-        console.log('mortgage value: ' + value);
+        //console.log('home value: ' + this.state.home_value);
+        //console.log('mortgage value: ' + value);
         fieldValidationErrors.mortgage = mortgageValid ? '' : 'Mortgage value should be less than the Fair Market Value of the Home';
-        console.log(fieldValidationErrors.mortgage);
+        //console.log(fieldValidationErrors.mortgage);
         break;
       case 'interest_rate':
         interest_rateValid = value.match(/^((\d+(\.\d*)?)|(\.\d+))$/) && value > 0 && value <= 10;
         fieldValidationErrors.interest_rate = interest_rateValid ? '' : 'Interest Rate should be between 0 and 10';
-        console.log(fieldValidationErrors.interest_rate);
+        //console.log(fieldValidationErrors.interest_rate);
         break;
       case 'term_years':
         term_yearsValid = value.match(/^\d*$/) && value > 0 && value <= 10;
         fieldValidationErrors.term_years = term_yearsValid ? '' : 'Mortgage Term should be between 0 and 10';
-        console.log(fieldValidationErrors.term_years);
+        //console.log(fieldValidationErrors.term_years);
         break;
       case 'amortization':
         amortizationValid = value.match(/^\d*$/) && value >= 5 && value <= 30;;
         fieldValidationErrors.amortization = amortizationValid ? '' : 'Amortization Period should be between 5 and 30';
-        console.log(fieldValidationErrors.amortization);
+        //console.log(fieldValidationErrors.amortization);
         break;
       default:
         break;
@@ -266,16 +266,16 @@ class MainForm extends React.Component{
 
   handleSubmit(e){
     e.preventDefault();
-    console.log('form valid:' + this.state.formValid);
-    console.log('form errors:' + this.state.formErrors);
+    //console.log('form valid:' + this.state.formValid);
+    //console.log('form errors:' + this.state.formErrors);
       if (this.state.formValid == true ){
         this.setState({ fireRedirect: true });
       }
   }
 
   updateDebts(newDebts){
-    console.log('newDebts invoked');
-    console.log(newDebts)
+    //console.log('newDebts invoked');
+    //console.log(newDebts)
     this.setState({
       debts: newDebts
     })
